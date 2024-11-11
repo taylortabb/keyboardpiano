@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard Sound & Animation</title>
+    <style>
+        /* Basic setup */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #fff;
+            transition: background-color 0.2s ease;
+            overflow: hidden;
+        }
+
+        /* Image styling */
+        img {
+            width: 25vw; /* 25% of viewport width */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        /* Define animations */
+        @keyframes colorPulse {
+            0% { background-color: #ff6b6b; }
+            100% { background-color: #fff; }
+        }
+
+        @keyframes colorFlash {
+            0% { background-color: #4ecdc4; }
+            100% { background-color: #fff; }
+        }
+
+        @keyframes colorWave {
+            0% { background-color: #ffe66d; }
+            100% { background-color: #fff; }
+        }
+
+        @keyframes colorPop {
+            0% { background-color: #ff9ff3; }
+            100% { background-color: #fff; }
+        }
+
+        @keyframes colorSparkle {
+            0% { background-color: #54a0ff; }
+            100% { background-color: #fff; }
+        }
+
+        @keyframes colorBurst {
+            0% { background-color: #ff6b81; }
+            100% { background-color: #fff; }
+        }
+
+        /* Animation classes */
+        .animate-a { animation: colorPulse 1s ease; }
+        .animate-b { animation: colorFlash 0.8s ease; }
+        .animate-c { animation: colorWave 0.9s ease; }
+        .animate-d { animation: colorPop 0.7s ease; }
+        .animate-e { animation: colorSparkle 1s ease; }
+        .animate-f { animation: colorBurst 0.6s ease; }
+
+        /* Footer text styling */
+        .footer-text {
+            position: fixed;
+            bottom: 10px;
+            font-size: 0.8rem;
+            color: rgba(0, 0, 0, 0.5); /* 50% transparent black */
+            text-align: center;
+            font-family: Helvetica, Arial, sans-serif;
+            pointer-events: none; /* Prevent interactions */
+            width: 100%; /* Center-align the text */
+        }
+
+        .footer-text a {
+            color: rgba(0, 0, 0, 0.5); /* 50% transparent black */
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Centered Image -->
+    <img src="main.png" alt="Centered Image">
+
+    <!-- Footer Text -->
+    <div class="footer-text">
+        VERSION 1.1-CMU-Q | BY <a href="http://tabb.me" target="_blank">TAYLOR TABB</a>!
+    </div>
+
+    <script>
+        // Array of animation classes to apply in sequence
+        const animations = ['animate-a', 'animate-b', 'animate-c', 'animate-d', 'animate-e', 'animate-f'];
+
+        // Function to play sound and apply animation
+        function playSoundAndAnimate(key) {
+            // Create a new audio instance for each key press
+            const audio = new Audio(`${key}.m4a`);
+            audio.play().catch(error => console.error("Audio playback error:", error));
+
+            // Choose animation class based on the character's ASCII code
+            const animationClass = animations[key.charCodeAt(0) % animations.length];
+
+            // Remove existing animation class by reflowing
+            document.body.className = '';  // Clear any existing animations
+            void document.body.offsetWidth; // Trigger reflow
+
+            // Add the selected animation class
+            document.body.classList.add(animationClass);
+        }
+
+        // Listen for key presses
+        document.addEventListener('keydown', (event) => {
+            const key = event.key.toLowerCase();
+            if (key.match(/^[a-z]$/)) {  // Ensure it's a letter
+                playSoundAndAnimate(key);
+            }
+        });
+    </script>
+</body>
+</html>
